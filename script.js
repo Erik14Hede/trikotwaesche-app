@@ -1,0 +1,1 @@
+// JavaScript-Logik kommt hier rein (Platzhalter)
