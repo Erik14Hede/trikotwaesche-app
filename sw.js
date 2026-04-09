@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trikotwaesche-cache-v3'; // <— Version hochzählen bei neuen Deploys
+const CACHE_NAME = 'trikotwaesche-cache-v4'; // <— Version hochzählen bei neuen Deploys
 const ASSETS = [
   './',
   './index.html',
