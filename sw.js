@@ -1,4 +1,5 @@
-const CACHE_NAME = 'trikotwaesche-cache-v5'; // <— Version hochzählen bei neuen Deploys
+const CACHE_NAME = 'trikotwaesche-cache-v6';
+
 const ASSETS = [
   './',
   './index.html',
@@ -19,24 +20,29 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null)))
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
     ).then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', (event) => {
-  const { request } = event;
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(request).then((cached) =>
-      cached ||
-      fetch(request).then((resp) => {
-        // nur GETs cachen
-        if (request.method === 'GET' && resp && resp.status === 200 && resp.type === 'basic') {
-          const respClone = resp.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, respClone));
-        }
-        return resp;
+    fetch(event.request)
+      .then((response) => {
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseClone);
+        });
+        return response;
       })
-    )
+      .catch(() => caches.match(event.request))
   );
 });
