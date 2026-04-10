@@ -1,48 +1,40 @@
-const CACHE_NAME = 'trikotwaesche-cache-v6';
-
-const ASSETS = [
-  './',
-  './index.html',
-  './style.css',
-  './script.js',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png'
-];
-
-self.addEventListener('install', (event) => {
-  self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
-  );
-});
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
-      )
-    ).then(() => self.clients.claim())
-  );
-});
+// sw.js
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
+    // Check if the request is from an HTTP(S) source
+    if (!event.request.url.startsWith('http')) {
+        return;
+    }
 
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const responseClone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseClone);
-        });
-        return response;
-      })
-      .catch(() => caches.match(event.request))
-  );
+    event.respondWith(
+        caches.open('your-cache-name')
+            .then(async (cache) => {
+                try {
+                    // Check if the response is already cached
+                    const cachedResponse = await cache.match(event.request);
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
+
+                    // If not cached, fetch the response
+                    const networkResponse = await fetch(event.request);
+  
+                    // Validate the response before caching
+                    if (networkResponse && networkResponse.ok) {
+                        // Put the validated response in the cache
+                        await cache.put(event.request, networkResponse.clone());
+                    }
+                    return networkResponse;
+                } catch (error) {
+                    console.error('Fetching failed:', error);
+                    // Handle errors like network issues
+                    throw error;
+                }
+            })
+    );
+});
+
+self.addEventListener('message', (event) => {
+    // Handle messages from other parts of the application
+    console.log('Message received from client:', event.data);
 });
