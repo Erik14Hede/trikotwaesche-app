@@ -144,3 +144,211 @@ hr { border:0; border-top:1px solid #eef2f7; margin:12px 0; }
   font-size: 0.95rem;
   white-space: nowrap;
 }
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.uploadLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.board-toolbar select {
+  width: auto;
+  min-width: 180px;
+}
+
+.board-split {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tactic-board-wrap {
+  width: 100%;
+}
+
+.tactic-board {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      #4c9a15 0%,
+      #4c9a15 12.5%,
+      #5eae1d 12.5%,
+      #5eae1d 25%
+    );
+  border: 4px solid #fff;
+  touch-action: none;
+}
+
+.pitch-line-half {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 4px;
+  background: #fff;
+  transform: translateY(-50%);
+}
+
+.pitch-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18%;
+  aspect-ratio: 1;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pitch-box {
+  position: absolute;
+  left: 20%;
+  width: 60%;
+  height: 16%;
+  border: 4px solid #fff;
+}
+
+.pitch-box.top {
+  top: 0;
+  border-top: 0;
+}
+
+.pitch-box.bottom {
+  bottom: 0;
+  border-bottom: 0;
+}
+
+.pitch-goal {
+  position: absolute;
+  left: 42%;
+  width: 16%;
+  height: 4%;
+  border: 3px solid #fff;
+}
+
+.pitch-goal.top {
+  top: 0;
+  transform: translateY(-45%);
+}
+
+.pitch-goal.bottom {
+  bottom: 0;
+  transform: translateY(45%);
+}
+
+#boardPlayersLayer {
+  position: absolute;
+  inset: 0;
+}
+
+.board-player {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+  z-index: 3;
+}
+
+.board-player.bench {
+  position: relative;
+  transform: none;
+  left: auto !important;
+  top: auto !important;
+  margin: 0 8px 8px 0;
+  display: inline-flex;
+}
+
+.board-marker {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: #fff;
+  border: 2px solid #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+
+.board-player.home .board-marker {
+  background: #d40000;
+}
+
+.board-player.away .board-marker {
+  background: #0038d4;
+}
+
+.board-label {
+  margin-top: 4px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: rgba(0,0,0,.28);
+  color: #fff6bf;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bench-area {
+  min-height: 90px;
+  border: 2px dashed #cdd6e6;
+  border-radius: 14px;
+  padding: 10px;
+  background: #f7f9fd;
+}
+
+.bench-title {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: #4b5d7a;
+}
+
+.bench-players {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.formation-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.small-btn {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 0;
+  cursor: pointer;
+}
+
+.board-note {
+  font-size: 0.9rem;
+  color: #5a6c87;
+  margin-top: 8px;
+}
